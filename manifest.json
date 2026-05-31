@@ -1,24 +1,23 @@
 {
   "name": "Ziyo Market",
   "short_name": "Ziyo Market",
-  "description": "Ziyo Market — Sifatli mahsulot, arzon narx!",
-  "start_url": "/",
+  "description": "Ziyo Market - Sifatli mahsulot, arzon narx!",
+  "start_url": "/Ziyo-market/",
+  "scope": "/Ziyo-market/",
   "display": "standalone",
   "background_color": "#f0f4f8",
   "theme_color": "#006400",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "https://ziyomarket.github.io/Ziyo-market/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
-      "src": "icon-512.png",
+      "src": "https://ziyomarket.github.io/Ziyo-market/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
