@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="theme-color" content="#006400"/>
+<meta name="description" content="Ziyo Market — Sifatli mahsulot, arzon narx!"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="apple-mobile-web-app-title" content="Ziyo Market"/>
+<title>Ziyo Market</title>
+<link rel="manifest" href="manifest.json"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --green:#006400;
+  --green2:#228B22;
+  --green-light:#e8f4e8;
+  --orange:#e07b00;
+  --red:#ff4444;
+  --bg:#f0f4f8;
+  --white:#fff;
+  --text:#1a1a1a;
+  --text2:#555;
+  --text3:#999;
+  --border:#e8ecf0;
+  --shadow:0 2px 10px rgba(0,0,0,0.08);
+  --radius:14px;
+  --font:'Nunito',sans-serif;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;}
+#app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,var(--green) 0%,var(--green2) 100%);padding:14px 16px 12px;color:#fff;position:sticky;top:0;z-index:20;box-shadow:0 2px 12px rgba(0,100,0,0.3);}
+.header-inner{display:flex;justify-content:space-between;align-items:center;}
+.shop-name{font-size:20px;font-weight:900;letter-spacing:-0.3px;}
+.shop-tag{font-size:11px;opacity:0.85;margin-top:1px;}
+.call-btn{background:rgba(255,255,255,0.2);color:#fff;border:1.5px solid rgba(255,255,255,0.4);border-radius:20px;padding:7px 14px;font-size:13px;font-weight:700;text-decoration:none;font-family:var(--font);}
+
+/* NAV */
+.nav{display:flex;background:var(--white);border-bottom:2px solid var(--border);position:sticky;top:60px;z-index:19;}
+.nav-btn{flex:1;padding:13px 0;background:none;border:none;border-bottom:3px solid transparent;font-size:14px;font-weight:700;color:var(--text3);cursor:pointer;font-family:var(--font);transition:color .2s;}
+.nav-btn.active{color:var(--green);border-bottom-color:var(--green);}
+
+/* CONTENT */
+.content{padding:12px;flex:1;}
+
+/* SEARCH */
+.search-box{display:flex;align-items:center;gap:8px;background:var(--white);border-radius:12px;padding:10px 14px;margin-bottom:10px;box-shadow:var(--shadow);}
+.search-input{flex:1;border:none;outline:none;font-size:14px;background:transparent;font-family:var(--font);color:var(--text);}
+.clear-btn{background:none;border:none;font-size:14px;color:var(--text3);cursor:pointer;padding:0;}
+
+/* CATEGORIES */
+.cat-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:8px;scrollbar-width:none;}
+.cat-row::-webkit-scrollbar{display:none;}
+.cat-btn{white-space:nowrap;padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--white);font-size:12px;font-weight:700;color:var(--text2);cursor:pointer;font-family:var(--font);transition:all .15s;}
+.cat-btn.active{background:var(--green);border-color:var(--green);color:#fff;}
+
+.count-row{font-size:12px;color:var(--text3);margin-bottom:8px;padding-left:2px;font-weight:600;}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.07);cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.card:active{transform:scale(0.97);}
+.img-wrap{position:relative;height:100px;background:#f8f9fb;}
+.card-img{width:100%;height:100%;object-fit:cover;}
+.emoji-box{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f0f7f0,#e8f4e8);font-size:38px;}
+.badge{position:absolute;top:6px;left:6px;background:var(--red);color:#fff;font-size:9px;font-weight:800;padding:3px 7px;border-radius:8px;}
+.card-body{padding:9px 10px 11px;}
+.card-cat{font-size:9px;color:var(--green);font-weight:800;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px;}
+.card-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:5px;line-height:1.3;}
+.card-price{font-size:13px;font-weight:800;color:var(--green);}
+.card-blok{font-size:10px;color:var(--orange);margin-top:2px;font-weight:700;}
+.empty{text-align:center;padding:40px;color:var(--text3);font-size:16px;}
+
+/* CONTACT */
+.contact-card{background:var(--white);border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);}
+.contact-hero{background:linear-gradient(135deg,var(--green),var(--green2));padding:28px 20px;text-align:center;color:#fff;}
+.contact-name{font-size:22px;font-weight:900;margin-top:8px;}
+.contact-tag{font-size:13px;opacity:0.85;margin-top:4px;font-weight:600;}
+.c-row{display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-bottom:1px solid #f5f5f5;}
+.c-label{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px;}
+.c-val{font-size:14px;color:#222;font-weight:700;text-decoration:none;}
+a.c-val{color:var(--green);}
+.stats-row{display:flex;border-top:1px solid #f0f0f0;}
+.stat-box{flex:1;text-align:center;padding:16px 8px;}
+.stat-num{font-size:20px;font-weight:900;color:var(--green);}
+.stat-lbl{font-size:11px;color:var(--text3);margin-top:2px;font-weight:600;}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:flex;align-items:flex-end;justify-content:center;z-index:100;animation:fadeIn .2s;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--white);border-radius:20px 20px 0 0;width:100%;max-width:480px;position:relative;max-height:88vh;overflow-y:auto;animation:slideUp .25s ease-out;}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.close-btn{position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.35);color:#fff;border:none;border-radius:50%;width:30px;height:30px;font-size:15px;cursor:pointer;z-index:1;font-family:var(--font);}
+.modal-img-wrap{height:220px;background:#f8f9fb;position:relative;}
+.modal-img{width:100%;height:100%;object-fit:cover;}
+.modal-emoji{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f0f7f0,#e0f0e0);font-size:80px;}
+.modal-body{padding:16px 20px 28px;}
+.modal-cat{font-size:11px;color:var(--green);font-weight:800;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
+.modal-name{font-size:20px;font-weight:900;color:#111;}
+.divider{height:1px;background:#eee;margin:14px 0;}
+.price-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.price-label{font-size:14px;color:var(--text2);font-weight:600;}
+.price-big{font-size:22px;font-weight:900;color:var(--green);}
+.price-blok{font-size:17px;font-weight:800;color:var(--orange);}
+.saving{background:#fff8e6;border:1px solid #ffe08a;border-radius:8px;padding:8px 12px;font-size:12px;color:#b06000;font-weight:700;margin-bottom:8px;}
+.modal-badge{background:#fff0f0;border:1px solid #ffcccc;border-radius:8px;padding:7px 12px;font-size:12px;color:#cc0000;font-weight:800;margin-bottom:8px;}
+.order-btn{display:block;text-align:center;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;padding:14px;border-radius:12px;font-size:16px;font-weight:800;text-decoration:none;font-family:var(--font);}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="header">
+    <div class="header-inner">
+      <div>
+        <div class="shop-name">🛒 Ziyo Market</div>
+        <div class="shop-tag">Sifatli mahsulot — arzon narx!</div>
+      </div>
+      <a href="tel:+998975090954" class="call-btn">📞 Qo'ng'iroq</a>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn active" id="btn-products" onclick="showTab('products')">🛍 Mahsulotlar</button>
+    <button class="nav-btn" id="btn-contact" onclick="showTab('contact')">📍 Aloqa</button>
+  </div>
+
+  <div id="tab-products" class="content">
+    <div class="search-box">
+      <span>🔍</span>
+      <input class="search-input" id="search" placeholder="Mahsulot qidirish..." oninput="filterProducts()" />
+      <button class="clear-btn" id="clear-btn" onclick="clearSearch()" style="display:none">✕</button>
+    </div>
+    <div class="cat-row" id="cat-row"></div>
+    <div class="count-row" id="count-row"></div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" style="display:none">😔 Topilmadi</div>
+  </div>
+
+  <div id="tab-contact" class="content" style="display:none">
+    <div class="contact-card">
+      <div class="contact-hero">
+        <div style="font-size:56px">🏪</div>
+        <div class="contact-name">Ziyo Market</div>
+        <div class="contact-tag">Sifatli mahsulot — arzon narx!</div>
+      </div>
+      <div>
+        <div class="c-row">
+          <span style="font-size:24px">📍</span>
+          <div><div class="c-label">Manzil</div><div class="c-val">Nam. Kosonsoy tum. Qorasuv MFY</div></div>
+        </div>
+        <div class="c-row">
+          <span style="font-size:24px">📞</span>
+          <div><div class="c-label">Telefon</div><a href="tel:+998975090954" class="c-val">+998 97 509 09 54</a></div>
+        </div>
+        <div class="c-row">
+          <span style="font-size:24px">✈️</span>
+          <div><div class="c-label">Telegram</div><a href="https://t.me/brave_0909" class="c-val">@brave_0909</a></div>
+        </div>
+        <div class="c-row">
+          <span style="font-size:24px">🕐</span>
+          <div><div class="c-label">Ish vaqti</div><div class="c-val">08:00 – 22:00 (har kuni)</div></div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box"><div class="stat-num">145+</div><div class="stat-lbl">Mahsulot</div></div>
+        <div class="stat-box"><div class="stat-num">7/7</div><div class="stat-lbl">Ochiq</div></div>
+        <div class="stat-box"><div class="stat-num">💯</div><div class="stat-lbl">Sifat</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="modal" style="display:none" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="close-btn" onclick="closeModal()">✕</button>
+    <div class="modal-img-wrap" id="modal-img-wrap"></div>
+    <div class="modal-body">
+      <div class="modal-cat" id="modal-cat"></div>
+      <div class="modal-name" id="modal-name"></div>
+      <div class="divider"></div>
+      <div class="price-row">
+        <span class="price-label">Narx (dona):</span>
+        <span class="price-big" id="modal-price"></span>
+      </div>
+      <div id="modal-blok-wrap"></div>
+      <div id="modal-badge-wrap"></div>
+      <div class="divider"></div>
+      <a href="#" class="order-btn" id="modal-order">📞 Buyurtma berish</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const fmt = n => n ? n.toLocaleString('uz-UZ') + " so'm" : null;
+
+const PRODUCTS = [
+  // ICHIMLIKLAR
+  {id:1,cat:"Ichimliklar",name:"Fanta 0.5L",emoji:"🧡",price:7000},
+  {id:2,cat:"Ichimliklar",name:"Fanta 1L",emoji:"🧡",price:11000},
+  {id:3,cat:"Ichimliklar",name:"Fanta 1.5L",emoji:"🧡",price:14000},
+  {id:4,cat:"Ichimliklar",name:"Fanta 2L",emoji:"🧡",price:18000},
+  {id:5,cat:"Ichimliklar",name:"Fanta 2.5L",emoji:"🧡",price:20000},
+  {id:6,cat:"Ichimliklar",name:"Coca-Cola 1L",emoji:"❤️",price:11000},
+  {id:7,cat:"Ichimliklar",name:"Coca-Cola 1.5L",emoji:"❤️",price:14000},
+  {id:8,cat:"Ichimliklar",name:"Flash Energy 0.45L",emoji:"⚡",price:12000},
+  {id:9,cat:"Ichimliklar",name:"Royal 0.3L (anor)",emoji:"🔴",price:7000},
+  {id:10,cat:"Ichimliklar",name:"Golden Life 0.3L (anor)",emoji:"🔴",price:6000},
+  {id:11,cat:"Ichimliklar",name:"Moxito Fresh 0.45L",emoji:"🍃",price:12000},
+  {id:12,cat:"Ichimliklar",name:"Raya 0.33L (nok)",emoji:"🍐",price:7000},
+  {id:13,cat:"Ichimliklar",name:"Chortoq suv 1L",emoji:"💧",price:10000,badge:"AKSIYA"},
+  {id:14,cat:"Ichimliklar",name:"Dena 1L (gilos)",emoji:"🍒",price:15000},
+  {id:15,cat:"Ichimliklar",name:"Dena 1L (olma)",emoji:"🍏",price:15000},
+  {id:16,cat:"Ichimliklar",name:"Dena 1L (shaftoli)",emoji:"🍑",price:15000},
+  {id:17,cat:"Ichimliklar",name:"Dena 1L (o'rik)",emoji:"🟠",price:15000},
+  {id:18,cat:"Ichimliklar",name:"Redi sok 1L (shaftoli)",emoji:"🍑",price:7000},
+  {id:19,cat:"Ichimliklar",name:"Redi sok 1L (o'rik)",emoji:"🟠",price:7000},
+  {id:20,cat:"Ichimliklar",name:"Hydrolife 1L (gazli)",emoji:"💧",price:5000},
+  {id:21,cat:"Ichimliklar",name:"Flavis 0.45L (nok)",emoji:"🍐",price:12000},
+  {id:22,cat:"Ichimliklar",name:"Ava Lemonade 0.45L",emoji:"🍋",price:12000},
+  {id:23,cat:"Ichimliklar",name:"Richlife 1L (gazsiz)",emoji:"💧",price:3000},
+  {id:24,cat:"Ichimliklar",name:"Richlife 0.5L (gazsiz)",emoji:"💧",price:2000},
+  {id:25,cat:"Ichimliklar",name:"Qirol Fresh 0.5L (apelsin)",emoji:"🍊",price:2000},
+  {id:26,cat:"Ichimliklar",name:"Qirol Fresh 0.5L (tarxun)",emoji:"🌿",price:2000},
+  {id:27,cat:"Ichimliklar",name:"Qirol Fresh 0.5L (cola)",emoji:"🥤",price:2000},
+  {id:28,cat:"Ichimliklar",name:"Choy 0.25L",emoji:"🍵",price:1000},
+  {id:29,cat:"Ichimliklar",name:"Nanay Buloq 10L",emoji:"💧",price:11000},
+  // SHIRINLIKLAR
+  {id:30,cat:"Shirinliklar",name:"Roshen Assortment 154gr",emoji:"🍫",price:40000},
+  {id:31,cat:"Shirinliklar",name:"Alpen Gold Max Fun 140gr",emoji:"🍫",price:25000},
+  {id:32,cat:"Shirinliklar",name:"Alpen Gold (qulpinoy yogurt)",emoji:"🍓",price:13000},
+  {id:33,cat:"Shirinliklar",name:"Alpen Gold (yong'oq mayiz)",emoji:"🍇",price:13000},
+  {id:34,cat:"Shirinliklar",name:"Alpen Gold Aerated 80gr",emoji:"🍫",price:13000},
+  {id:35,cat:"Shirinliklar",name:"Milka (pechenli) 87gr",emoji:"🟣",price:18000},
+  {id:36,cat:"Shirinliklar",name:"Alyonka 75gr",emoji:"🍫",price:17000},
+  {id:37,cat:"Shirinliklar",name:"Nehir Dubai 80gr",emoji:"🏙️",price:5000},
+  {id:38,cat:"Shirinliklar",name:"Xoroshaya molochnaya 80gr",emoji:"🍫",price:10000},
+  {id:39,cat:"Shirinliklar",name:"Yashkino shokolad 90gr",emoji:"🥜",price:14000},
+  {id:40,cat:"Shirinliklar",name:"Nehir Kids shokolad 60gr",emoji:"🎈",price:4000},
+  {id:41,cat:"Shirinliklar",name:"Crafers Wafers 50gr",emoji:"🟩",price:6000},
+  {id:42,cat:"Shirinliklar",name:"Chocotella (N'Medov)",emoji:"🫙",price:25000},
+  {id:43,cat:"Shirinliklar",name:"Choco findiqli krem",emoji:"🫙",price:25000},
+  {id:44,cat:"Shirinliklar",name:"Strobar 40gr",emoji:"🍬",price:6000},
+  {id:45,cat:"Shirinliklar",name:"Twix 50gr",emoji:"🍫",price:8000},
+  {id:46,cat:"Shirinliklar",name:"Snickers 50gr",emoji:"🍫",price:8000},
+  {id:47,cat:"Shirinliklar",name:"Snickers Super 80gr",emoji:"🍫",price:12000},
+  // UN VA DON
+  {id:48,cat:"Un va Don",name:"Muka Panda 2kg (un)",emoji:"🌾",price:16000},
+  {id:49,cat:"Un va Don",name:"Muka Panda 1kg (un)",emoji:"🌾",price:8000},
+  {id:50,cat:"Un va Don",name:"Un 1 nav (Qozoq) 50kg",emoji:"🌾",price:225000},
+  {id:51,cat:"Un va Don",name:"Un 1 nav (Qozoq) 25kg",emoji:"🌾",price:115000},
+  // KONSERVALAR
+  {id:52,cat:"Konservalar",name:"Moloko (sgusha) 350gr",emoji:"🥛",price:10000},
+  {id:53,cat:"Konservalar",name:"Tomat (Sardoba)",emoji:"🍅",price:15000},
+  {id:54,cat:"Konservalar",name:"Makka Naturella 425ml",emoji:"🌽",price:10000},
+  {id:55,cat:"Konservalar",name:"Goroshek (garox) 400ml",emoji:"🟢",price:8000},
+  {id:56,cat:"Konservalar",name:"Uksusnaya kislota 70%",emoji:"🧪",price:5000},
+  {id:57,cat:"Konservalar",name:"Soya sous 180ml",emoji:"🍶",price:7000},
+  // CHOY VA QAHVA
+  {id:58,cat:"Choy va Qahva",name:"Turon Camel (choy) 500gr",emoji:"🍵",price:20000},
+  {id:59,cat:"Choy va Qahva",name:"Rizq (qora choy) 250gr",emoji:"🍵",price:17000},
+  {id:60,cat:"Choy va Qahva",name:"Rizq (ko'k choy) 200gr",emoji:"🍵",price:10000},
+  {id:61,cat:"Choy va Qahva",name:"Zira choy kg",emoji:"🍵",price:43000},
+  {id:62,cat:"Choy va Qahva",name:"Zira standart kg",emoji:"🍵",price:55000},
+  {id:63,cat:"Choy va Qahva",name:"Yasin qora choy kg",emoji:"🍵",price:60000},
+  {id:64,cat:"Choy va Qahva",name:"Ko'k choy arzon kg",emoji:"🍵",price:35000},
+  {id:65,cat:"Choy va Qahva",name:"Original ko'k choy kg",emoji:"🍵",price:60000},
+  {id:66,cat:"Choy va Qahva",name:"Nescafe Gold 47.5gr",emoji:"☕",price:32000},
+  {id:67,cat:"Choy va Qahva",name:"Lusso Gold 95gr",emoji:"☕",price:47000},
+  {id:68,cat:"Choy va Qahva",name:"Kakao classik 45gr",emoji:"🍫",price:5000},
+  {id:69,cat:"Choy va Qahva",name:"Uno Momento 3in1 20gr",emoji:"☕",price:2000},
+  {id:70,cat:"Choy va Qahva",name:"Uno Momento kapuchino 30gr",emoji:"☕",price:3000},
+  // SHAKAR VA QAND
+  {id:71,cat:"Shakar va Qand",name:"Shakar kristal",emoji:"🍚",price:13000},
+  {id:72,cat:"Shakar va Qand",name:"Kubik qant",emoji:"🟦",price:15000},
+  {id:73,cat:"Shakar va Qand",name:"Novvot dur",emoji:"🟡",price:18000},
+  {id:74,cat:"Shakar va Qand",name:"Novvot tag",emoji:"🟤",price:15000},
+  {id:75,cat:"Shakar va Qand",name:"Novvot oq tag",emoji:"⬜",price:15000},
+  // OZIQ-OVQAT
+  {id:76,cat:"Oziq-Ovqat",name:"Angel (droja) 15gr",emoji:"🌟",price:2000},
+  {id:77,cat:"Oziq-Ovqat",name:"Angel (droja) 100gr",emoji:"🌟",price:7000},
+  {id:78,cat:"Oziq-Ovqat",name:"Soda (pishevaya)",emoji:"🧂",price:5000},
+  {id:79,cat:"Oziq-Ovqat",name:"Masha kasha 400gr",emoji:"👶",price:16000},
+  {id:80,cat:"Oziq-Ovqat",name:"Nestle kasha (1,6,9 oy)",emoji:"👶",price:28000},
+  {id:81,cat:"Oziq-Ovqat",name:"Krupa mannaya 300gr",emoji:"🥣",price:6000},
+  {id:82,cat:"Oziq-Ovqat",name:"Slivki suxoy 150gr",emoji:"🥛",price:15000},
+  // SABZAVOTLAR
+  {id:83,cat:"Sabzavotlar",name:"Piyoz yangi kg",emoji:"🧅",price:2500},
+  {id:84,cat:"Sabzavotlar",name:"Kartoshka yangi kg",emoji:"🥔",price:7500},
+  {id:85,cat:"Sabzavotlar",name:"Savzi (mesni) kg",emoji:"🥕",price:4000},
+  // PAMPERS
+  {id:86,cat:"Pampers",name:"Merry Po 1 (30ta)",emoji:"👶",price:1200,blok:34000,blokDona:30},
+  {id:87,cat:"Pampers",name:"Merry Po 2 (28ta)",emoji:"👶",price:1300,blok:34000,blokDona:28},
+  {id:88,cat:"Pampers",name:"Merry Po 3 (25ta)",emoji:"👶",price:1500,blok:34000,blokDona:25},
+  {id:89,cat:"Pampers",name:"Merry Po 4 (22ta)",emoji:"👶",price:1700,blok:34000,blokDona:22},
+  {id:90,cat:"Pampers",name:"Merry Po 5 (18ta)",emoji:"👶",price:2000,blok:34000,blokDona:18},
+  {id:91,cat:"Pampers",name:"Qo'zichoq 2 (80ta)",emoji:"🐑",price:1200,blok:90000,blokDona:80},
+  {id:92,cat:"Pampers",name:"Qo'zichoq 3 (70ta)",emoji:"🐑",price:1500,blok:90000,blokDona:70},
+  {id:93,cat:"Pampers",name:"Qo'zichoq 4 (60ta)",emoji:"🐑",price:1700,blok:90000,blokDona:60},
+  {id:94,cat:"Pampers",name:"Qo'zichoq 5 (52ta)",emoji:"🐑",price:1800,blok:90000,blokDona:52},
+  {id:95,cat:"Pampers",name:"Perla 3 (56ta)",emoji:"🌸",price:2200,blok:115000,blokDona:56},
+  {id:96,cat:"Pampers",name:"Perla 4 (50ta)",emoji:"🌸",price:2300,blok:115000,blokDona:50},
+  {id:97,cat:"Pampers",name:"Perla 5 (42ta)",emoji:"🌸",price:2700,blok:115000,blokDona:42},
+  // PARASHOK
+  {id:98,cat:"Parashok",name:"Ariena 900gr",emoji:"🫧",price:11000},
+  {id:99,cat:"Parashok",name:"Delfin 900gr",emoji:"🐬",price:11000},
+  {id:100,cat:"Parashok",name:"Aprel 900gr",emoji:"🌸",price:14000},
+  {id:101,cat:"Parashok",name:"Nihol 1800gr",emoji:"🌿",price:20000},
+  {id:102,cat:"Parashok",name:"Delfin 1800gr",emoji:"🐬",price:20000},
+  {id:103,cat:"Parashok",name:"Aprel avtomat 900gr",emoji:"🌸",price:17000},
+  {id:104,cat:"Parashok",name:"Nihol 250gr",emoji:"🌿",price:4000},
+  // SOVUN VA GEL
+  {id:105,cat:"Sovun va Gel",name:"Tash sovun 145gr",emoji:"🧼",price:2000},
+  {id:106,cat:"Sovun va Gel",name:"Alfa sovun 275gr",emoji:"🧼",price:5000},
+  {id:107,cat:"Sovun va Gel",name:"Neo gel 200gr",emoji:"🫧",price:6000},
+  {id:108,cat:"Sovun va Gel",name:"Zeleniy chay gel 450gr",emoji:"🍃",price:9000},
+  {id:109,cat:"Sovun va Gel",name:"Donya kaplya 500gr",emoji:"💧",price:6000},
+  {id:110,cat:"Sovun va Gel",name:"Vim 500ml (oyna tozalovchi)",emoji:"🪟",price:7000},
+  // XONADON
+  {id:111,cat:"Xonadon",name:"Delfin latta arzon",emoji:"🧹",price:7000},
+  {id:112,cat:"Xonadon",name:"Delfin latta original",emoji:"🧹",price:10000},
+  {id:113,cat:"Xonadon",name:"Gupka katta (mashina)",emoji:"🚗",price:4000},
+  {id:114,cat:"Xonadon",name:"Pirchatka zebra charmli",emoji:"🧤",price:3000},
+  {id:115,cat:"Xonadon",name:"Pirchatka arzon",emoji:"🧤",price:2000},
+  {id:116,cat:"Xonadon",name:"Plisos ruka",emoji:"🧹",price:10000},
+  {id:117,cat:"Xonadon",name:"Plisos",emoji:"🧹",price:8000},
+  {id:118,cat:"Xonadon",name:"Arzon gupka 3ta",emoji:"🧽",price:4000},
+  {id:119,cat:"Xonadon",name:"Arzon gupka 5ta",emoji:"🧽",price:5000},
+  {id:120,cat:"Xonadon",name:"Gupka 6ta",emoji:"🧽",price:7000},
+  {id:121,cat:"Xonadon",name:"Bavi 60gr",emoji:"🫧",price:10000},
+  {id:122,cat:"Xonadon",name:"Sim idish 12ta",emoji:"🔩",price:8000},
+  {id:123,cat:"Xonadon",name:"Bumaga Miko 6ta",emoji:"🧻",price:10000},
+  {id:124,cat:"Xonadon",name:"Bumaga Rossa 6ta",emoji:"🧻",price:12000},
+  {id:125,cat:"Xonadon",name:"Bumaga Rossa 8ta",emoji:"🧻",price:14000},
+  // DORI VA BOSHQA
+  {id:126,cat:"Dori va Boshqa",name:"Bo'r dori original",emoji:"💊",price:3000},
+  {id:127,cat:"Dori va Boshqa",name:"Dust dori (menan)",emoji:"💊",price:3000},
+  {id:128,cat:"Dori va Boshqa",name:"Bo'r dori 5ta",emoji:"💊",price:4700},
+  {id:129,cat:"Dori va Boshqa",name:"Dust dori",emoji:"💊",price:2000},
+  {id:130,cat:"Dori va Boshqa",name:"Kapsula koreya 61ta",emoji:"💊",price:1500,blok:65000,blokDona:61},
+  {id:131,cat:"Dori va Boshqa",name:"Kapsula 60ta",emoji:"💊",price:1000,blok:36000,blokDona:60},
+  {id:132,cat:"Dori va Boshqa",name:"Soni batareyka (kichik)",emoji:"🔋",price:1500,blok:80000,blokDona:60},
+  {id:133,cat:"Dori va Boshqa",name:"Soni batareyka",emoji:"🔋",price:1500,blok:80000,blokDona:60},
+  {id:134,cat:"Dori va Boshqa",name:"Kusachka (tirnoq olgich)",emoji:"✂️",price:5000},
+  {id:135,cat:"Dori va Boshqa",name:"Kuchachka (tirnoq olgich)",emoji:"✂️",price:6000},
+  {id:136,cat:"Dori va Boshqa",name:"Lezva Rapira 10ta",emoji:"🪒",price:4000},
+  {id:137,cat:"Dori va Boshqa",name:"Britva Guard",emoji:"🪒",price:2000},
+  {id:138,cat:"Dori va Boshqa",name:"Big Britva 5ta",emoji:"🪒",price:4000,blok:20000,blokDona:5},
+  // SUT MAHSULOTLARI
+  {id:139,cat:"Sut mahsulotlari",name:"Qatiq banka",emoji:"🥛",price:12000},
+  {id:140,cat:"Sut mahsulotlari",name:"Suzma idish",emoji:"🥛",price:10000},
+  {id:141,cat:"Sut mahsulotlari",name:"Smetana 15%",emoji:"🥛",price:8000},
+  {id:142,cat:"Sut mahsulotlari",name:"Smetana 25%",emoji:"🥛",price:10000},
+  {id:143,cat:"Sut mahsulotlari",name:"Qaymoq damashni 200gr",emoji:"🥛",price:12000},
+  {id:144,cat:"Sut mahsulotlari",name:"Ayron achchiq 1L",emoji:"🥛",price:10000},
+  {id:145,cat:"Sut mahsulotlari",name:"Ayron rayxon 1L",emoji:"🥛",price:10000},
+];
+
+const CATS = ["Barchasi", ...new Set(PRODUCTS.map(p => p.cat))];
+let currentCat = "Barchasi";
+
+// Build category buttons
+const catRow = document.getElementById('cat-row');
+CATS.forEach(c => {
+  const btn = document.createElement('button');
+  btn.className = 'cat-btn' + (c === 'Barchasi' ? ' active' : '');
+  btn.textContent = c;
+  btn.onclick = () => { currentCat = c; document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); filterProducts(); };
+  catRow.appendChild(btn);
+});
+
+function filterProducts() {
+  const search = document.getElementById('search').value.toLowerCase();
+  document.getElementById('clear-btn').style.display = search ? 'block' : 'none';
+  const filtered = PRODUCTS.filter(p => {
+    const mc = currentCat === 'Barchasi' || p.cat === currentCat;
+    const ms = p.name.toLowerCase().includes(search);
+    return mc && ms;
+  });
+  renderGrid(filtered);
+}
+
+function clearSearch() {
+  document.getElementById('search').value = '';
+  filterProducts();
+}
+
+function renderGrid(list) {
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('empty');
+  const countRow = document.getElementById('count-row');
+  countRow.textContent = list.length + ' ta mahsulot';
+  if (list.length === 0) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  grid.innerHTML = list.map(p => `
+    <div class="card" onclick="openModal(${p.id})">
+      <div class="img-wrap">
+        <div class="emoji-box">${p.emoji}</div>
+        ${p.badge ? `<div class="badge">${p.badge}</div>` : ''}
+      </div>
+      <div class="card-body">
+        <div class="card-cat">${p.cat}</div>
+        <div class="card-name">${p.name}</div>
+        <div class="card-price">${fmt(p.price)}</div>
+        ${p.blok ? `<div class="card-blok">Blok: ${fmt(p.blok)}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function openModal(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  document.getElementById('modal-img-wrap').innerHTML = `<div class="modal-emoji">${p.emoji}</div>`;
+  document.getElementById('modal-cat').textContent = p.cat;
+  document.getElementById('modal-name').textContent = p.name;
+  document.getElementById('modal-price').textContent = fmt(p.price);
+  const blokWrap = document.getElementById('modal-blok-wrap');
+  if (p.blok) {
+    blokWrap.innerHTML = `
+      <div class="price-row"><span class="price-label">Blok (${p.blokDona} ta):</span><span class="price-blok">${fmt(p.blok)}</span></div>
+      <div class="saving">💡 Blokda tejash: ${fmt(p.price * p.blokDona - p.blok)}</div>
+    `;
+  } else { blokWrap.innerHTML = ''; }
+  const badgeWrap = document.getElementById('modal-badge-wrap');
+  badgeWrap.innerHTML = p.badge ? `<div class="modal-badge">🔥 ${p.badge}</div>` : '';
+  document.getElementById('modal-order').href = 'tel:+998975090954';
+  document.getElementById('modal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function showTab(tab) {
+  document.getElementById('tab-products').style.display = tab === 'products' ? 'block' : 'none';
+  document.getElementById('tab-contact').style.display = tab === 'contact' ? 'block' : 'none';
+  document.getElementById('btn-products').classList.toggle('active', tab === 'products');
+  document.getElementById('btn-contact').classList.toggle('active', tab === 'contact');
+}
+
+// Initial render
+filterProducts();
+
+// Service Worker for PWA
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>
